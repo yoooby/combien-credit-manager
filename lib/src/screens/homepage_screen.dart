@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../constans/ui_constants.dart';
-import '../stores/store_card.dart';
-import 'homepage_widgets.dart';
+import '../components/store_card.dart';
+import '../components/homepage_widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

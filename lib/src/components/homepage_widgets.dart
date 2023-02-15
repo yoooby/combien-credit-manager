@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../constans/ui_constants.dart';
+import '../utils/ui_constants.dart';
 
 class BalanceCard extends StatelessWidget {
   const BalanceCard({

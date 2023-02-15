@@ -1,4 +1,4 @@
-import 'package:combien/src/features/HomePage/homepage_screen.dart';
+import 'package:combien/src/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
