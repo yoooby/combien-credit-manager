@@ -1,9 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:isar/isar.dart';
 part 'transactions.freezed.dart';
 
 @freezed
-@immutable
 class Store with _$Store {
+  @ignore
   double get balance {
     double sum = 0;
     for (var transation in transactionList) {
@@ -15,18 +16,18 @@ class Store with _$Store {
   const Store._();
 
   const factory Store({
-    required String id,
+    @Default(Isar.autoIncrement) Id id,
     required final String name,
     required final List<Transaction> transactionList,
   }) = _Store;
 }
 
 @freezed
-@immutable
 abstract class Transaction with _$Transaction {
   const factory Transaction({
-    required String id,
-    required String description,
+    @Default(Isar.autoIncrement) Id id,
+    @Default('') String description,
     required double amount,
+    required DateTime date,
   }) = _Transaction;
 }

@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Store {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Transaction> get transactionList => throw _privateConstructorUsedError;
 
@@ -29,7 +29,7 @@ abstract class $StoreCopyWith<$Res> {
   factory $StoreCopyWith(Store value, $Res Function(Store) then) =
       _$StoreCopyWithImpl<$Res, Store>;
   @useResult
-  $Res call({String id, String name, List<Transaction> transactionList});
+  $Res call({int id, String name, List<Transaction> transactionList});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,7 @@ abstract class _$$_StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       __$$_StoreCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, List<Transaction> transactionList});
+  $Res call({int id, String name, List<Transaction> transactionList});
 }
 
 /// @nodoc
@@ -92,7 +92,7 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -109,14 +109,15 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
 
 class _$_Store extends _Store {
   const _$_Store(
-      {required this.id,
+      {this.id = Isar.autoIncrement,
       required this.name,
       required final List<Transaction> transactionList})
       : _transactionList = transactionList,
         super._();
 
   @override
-  final String id;
+  @JsonKey()
+  final int id;
   @override
   final String name;
   final List<Transaction> _transactionList;
@@ -156,13 +157,13 @@ class _$_Store extends _Store {
 
 abstract class _Store extends Store {
   const factory _Store(
-      {required final String id,
+      {final int id,
       required final String name,
       required final List<Transaction> transactionList}) = _$_Store;
   const _Store._() : super._();
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
@@ -175,9 +176,10 @@ abstract class _Store extends Store {
 
 /// @nodoc
 mixin _$Transaction {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TransactionCopyWith<Transaction> get copyWith =>
@@ -190,7 +192,7 @@ abstract class $TransactionCopyWith<$Res> {
           Transaction value, $Res Function(Transaction) then) =
       _$TransactionCopyWithImpl<$Res, Transaction>;
   @useResult
-  $Res call({String id, String description, double amount});
+  $Res call({int id, String description, double amount, DateTime date});
 }
 
 /// @nodoc
@@ -209,12 +211,13 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
     Object? id = null,
     Object? description = null,
     Object? amount = null,
+    Object? date = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -223,6 +226,10 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -235,7 +242,7 @@ abstract class _$$_TransactionCopyWith<$Res>
       __$$_TransactionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String description, double amount});
+  $Res call({int id, String description, double amount, DateTime date});
 }
 
 /// @nodoc
@@ -252,12 +259,13 @@ class __$$_TransactionCopyWithImpl<$Res>
     Object? id = null,
     Object? description = null,
     Object? amount = null,
+    Object? date = null,
   }) {
     return _then(_$_Transaction(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -266,6 +274,10 @@ class __$$_TransactionCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -274,18 +286,25 @@ class __$$_TransactionCopyWithImpl<$Res>
 
 class _$_Transaction implements _Transaction {
   const _$_Transaction(
-      {required this.id, required this.description, required this.amount});
+      {this.id = Isar.autoIncrement,
+      this.description = '',
+      required this.amount,
+      required this.date});
 
   @override
-  final String id;
+  @JsonKey()
+  final int id;
   @override
+  @JsonKey()
   final String description;
   @override
   final double amount;
+  @override
+  final DateTime date;
 
   @override
   String toString() {
-    return 'Transaction(id: $id, description: $description, amount: $amount)';
+    return 'Transaction(id: $id, description: $description, amount: $amount, date: $date)';
   }
 
   @override
@@ -296,11 +315,12 @@ class _$_Transaction implements _Transaction {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, description, amount);
+  int get hashCode => Object.hash(runtimeType, id, description, amount, date);
 
   @JsonKey(ignore: true)
   @override
@@ -311,16 +331,19 @@ class _$_Transaction implements _Transaction {
 
 abstract class _Transaction implements Transaction {
   const factory _Transaction(
-      {required final String id,
-      required final String description,
-      required final double amount}) = _$_Transaction;
+      {final int id,
+      final String description,
+      required final double amount,
+      required final DateTime date}) = _$_Transaction;
 
   @override
-  String get id;
+  int get id;
   @override
   String get description;
   @override
   double get amount;
+  @override
+  DateTime get date;
   @override
   @JsonKey(ignore: true)
   _$$_TransactionCopyWith<_$_Transaction> get copyWith =>

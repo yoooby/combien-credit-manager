@@ -14,8 +14,8 @@ final totalAmount = Provider<double>((ref) {
 final storesListProvider =
     StateNotifierProvider<StoresNotifier, List<Store>>((ref) {
   return StoresNotifier([
-    Store(id: '0', name: 'ismailia :)', transactionList: []),
-    Store(id: '1', name: 'SK', transactionList: []),
+    Store(name: 'ismailia :)', transactionList: []),
+    Store(name: 'SK', transactionList: []),
   ]);
 });
 
@@ -27,7 +27,6 @@ class StoresNotifier extends StateNotifier<List<Store>> {
     state = [
       ...state,
       Store(
-        id: _uuid.v4(),
         name: name,
         transactionList: const [],
       ),
