@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Store {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<Transaction> get transactionList => throw _privateConstructorUsedError;
 
@@ -28,7 +29,7 @@ abstract class $StoreCopyWith<$Res> {
   factory $StoreCopyWith(Store value, $Res Function(Store) then) =
       _$StoreCopyWithImpl<$Res, Store>;
   @useResult
-  $Res call({String name, List<Transaction> transactionList});
+  $Res call({String id, String name, List<Transaction> transactionList});
 }
 
 /// @nodoc
@@ -44,10 +45,15 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? transactionList = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -66,7 +72,7 @@ abstract class _$$_StoreCopyWith<$Res> implements $StoreCopyWith<$Res> {
       __$$_StoreCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, List<Transaction> transactionList});
+  $Res call({String id, String name, List<Transaction> transactionList});
 }
 
 /// @nodoc
@@ -78,10 +84,15 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? transactionList = null,
   }) {
     return _then(_$_Store(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -96,11 +107,16 @@ class __$$_StoreCopyWithImpl<$Res> extends _$StoreCopyWithImpl<$Res, _$_Store>
 
 /// @nodoc
 
-class _$_Store implements _Store {
+class _$_Store extends _Store {
   const _$_Store(
-      {required this.name, required final List<Transaction> transactionList})
-      : _transactionList = transactionList;
+      {required this.id,
+      required this.name,
+      required final List<Transaction> transactionList})
+      : _transactionList = transactionList,
+        super._();
 
+  @override
+  final String id;
   @override
   final String name;
   final List<Transaction> _transactionList;
@@ -113,7 +129,7 @@ class _$_Store implements _Store {
 
   @override
   String toString() {
-    return 'Store(name: $name, transactionList: $transactionList)';
+    return 'Store(id: $id, name: $name, transactionList: $transactionList)';
   }
 
   @override
@@ -121,14 +137,15 @@ class _$_Store implements _Store {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Store &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._transactionList, _transactionList));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, name, const DeepCollectionEquality().hash(_transactionList));
+  int get hashCode => Object.hash(runtimeType, id, name,
+      const DeepCollectionEquality().hash(_transactionList));
 
   @JsonKey(ignore: true)
   @override
@@ -137,11 +154,15 @@ class _$_Store implements _Store {
       __$$_StoreCopyWithImpl<_$_Store>(this, _$identity);
 }
 
-abstract class _Store implements Store {
+abstract class _Store extends Store {
   const factory _Store(
-      {required final String name,
+      {required final String id,
+      required final String name,
       required final List<Transaction> transactionList}) = _$_Store;
+  const _Store._() : super._();
 
+  @override
+  String get id;
   @override
   String get name;
   @override
@@ -154,7 +175,7 @@ abstract class _Store implements Store {
 
 /// @nodoc
 mixin _$Transaction {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
 
@@ -169,7 +190,7 @@ abstract class $TransactionCopyWith<$Res> {
           Transaction value, $Res Function(Transaction) then) =
       _$TransactionCopyWithImpl<$Res, Transaction>;
   @useResult
-  $Res call({int id, String description, double amount});
+  $Res call({String id, String description, double amount});
 }
 
 /// @nodoc
@@ -193,7 +214,7 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -214,7 +235,7 @@ abstract class _$$_TransactionCopyWith<$Res>
       __$$_TransactionCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String description, double amount});
+  $Res call({String id, String description, double amount});
 }
 
 /// @nodoc
@@ -236,7 +257,7 @@ class __$$_TransactionCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -256,7 +277,7 @@ class _$_Transaction implements _Transaction {
       {required this.id, required this.description, required this.amount});
 
   @override
-  final int id;
+  final String id;
   @override
   final String description;
   @override
@@ -290,12 +311,12 @@ class _$_Transaction implements _Transaction {
 
 abstract class _Transaction implements Transaction {
   const factory _Transaction(
-      {required final int id,
+      {required final String id,
       required final String description,
       required final double amount}) = _$_Transaction;
 
   @override
-  int get id;
+  String get id;
   @override
   String get description;
   @override

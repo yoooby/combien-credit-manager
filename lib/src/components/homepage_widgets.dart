@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:combien/src/providers/stores_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../utils/ui_constants.dart';
+import '../utils/constants.dart';
 
-class BalanceCard extends StatelessWidget {
+class BalanceCard extends ConsumerWidget {
   const BalanceCard({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    double balance = ref.watch(totalAmount);
     return Container(
       margin: EdgeInsets.all(15.0),
       width: double.infinity,
@@ -30,7 +33,7 @@ class BalanceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 Text(
-                  '123',
+                  balance.toInt().toString(),
                   style: kCardTextStyle,
                 ),
                 SizedBox(
@@ -73,9 +76,11 @@ class HomePageButton extends StatelessWidget {
   const HomePageButton({
     super.key,
     required this.icon,
-    required this.label,
+    this.label = '',
+    this.onPressed,
   });
 
+  final VoidCallback? onPressed;
   final IconData icon;
   final String label;
   @override
@@ -84,7 +89,7 @@ class HomePageButton extends StatelessWidget {
       children: [
         RawMaterialButton(
           elevation: 2,
-          onPressed: () {},
+          onPressed: onPressed,
           shape: CircleBorder(),
           constraints: BoxConstraints.tightFor(width: 56, height: 56),
           fillColor: kDarkColor,

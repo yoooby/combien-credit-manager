@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-import '../utils/ui_constants.dart';
+import '../utils/constants.dart';
 
 class StoreCard extends StatelessWidget {
-  const StoreCard({super.key});
-
+  const StoreCard(
+      {super.key, required this.name, required this.amount, this.onPress});
+  final String name;
+  final String amount;
+  final VoidCallback? onPress;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +18,7 @@ class StoreCard extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 15.0),
       child: InkWell(
-        onTap: () {},
+        onTap: onPress,
         child: Card(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -26,7 +29,7 @@ class StoreCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Test Ismailia',
+                  name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -38,7 +41,7 @@ class StoreCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     Text(
-                      '50',
+                      amount,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
