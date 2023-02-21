@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:combien/src/models/dtos/store.dart';
 import 'package:combien/src/models/transactions.dart';
 import 'package:combien/src/providers/stores_provider.dart';
 import 'package:combien/src/screens/store_screen.dart';
@@ -15,7 +16,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final stores = ref.watch(storesListProvider);
+    final stores = ref.read(storesListProvider.stream);
 
     return SafeArea(
       child: Column(
@@ -42,19 +43,33 @@ class HomePage extends ConsumerWidget {
           SizedBox(
             height: 15,
           ),
-          for (var store in stores)
-            StoreCard(
-              onPress: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StorePage(store: store),
-                  ),
+          StreamBuilder<List<Store>>(
+            stream: stores,
+            initialData: List.empty(growable: true),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator.adaptive();
+              } else {
+                return Column(
+                  children: [
+                    for (var store in snapshot.data)
+                      StoreCard(
+                        onPress: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StorePage(store: store),
+                            ),
+                          );
+                        },
+                        name: store.name,
+                        amount: store.balance.toString(),
+                      ),
+                  ],
                 );
-              },
-              name: store.name,
-              amount: store.balance.toInt().toString(),
-            ),
+              }
+            },
+          ),
         ],
       ),
     );

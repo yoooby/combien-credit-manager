@@ -16,15 +16,15 @@ dependencies:
   hooks_riverpod: ^2.2.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
-  uuid: ^3.0.7
 
 dev_dependencies:
-  freezed_annotation: ^2.2.0
-
-  isar_generator: ^3.0.5
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  freezed_annotation: ^2.2.0
+
+  isar_generator: ^3.0.5
+  objectbox_generator: ^1.7.2
 
 flutter:
   uses-material-design: true

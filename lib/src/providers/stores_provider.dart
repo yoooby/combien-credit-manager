@@ -1,47 +1,64 @@
+import 'dart:ffi';
+
+import 'package:collection/collection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../models/transactions.dart';
-import 'package:uuid/uuid.dart';
 
-const _uuid = Uuid();
+import 'package:combien/src/models/dtos/store.dart';
+import 'package:isar/isar.dart';
 
-final totalAmount = Provider<double>((ref) {
-  return ref
-      .watch(storesListProvider)
-      .map((e) => e.balance)
-      .reduce((a, b) => a + b);
+import '../database.dart';
+
+final storeBalanceProvider =
+    StreamProvider.family<double, Id>((ref, storeId) async* {
+  final storeList = await ref.watch(storesListProvider.future);
+  final store = storeList.where((store) => storeId == store.id).first;
+  yield store.balance;
 });
 
-final storesListProvider =
-    StateNotifierProvider<StoresNotifier, List<Store>>((ref) {
-  return StoresNotifier([
-    Store(name: 'ismailia :)', transactionList: []),
-    Store(name: 'SK', transactionList: []),
-  ]);
+final totalAmountProvider = StreamProvider<double>((ref) async* {
+  final storesList = await ref.watch(storesListProvider.future);
+  yield storesList.map((store) => store.balance).fold(0.0, (a, b) => a + b);
 });
 
-class StoresNotifier extends StateNotifier<List<Store>> {
-  StoresNotifier([List<Store>? initialStores]) : super(initialStores ?? []);
+final storesListProvider = StreamProvider<List<Store>>((ref) async* {
+  final storesList = ref.watch(isarProvider).getAllStores();
+  yield* storesList;
+});
+// class StoresNotifier extends StateNotifier<List<Store>> {
+//   final List<Store> initialStores;
 
-  /// Adds `Store` item to list.
-  void add(String name) {
-    state = [
-      ...state,
-      Store(
-        name: name,
-        transactionList: const [],
-      ),
-    ];
-  }
+//   StoresNotifier(this.initialStores) : super(initialStores =) {
 
-  /// Edits a `Store` item.
-  void edit({required String id, required String name}) {
-    final newState = [...state];
-    final storeToReplaceIndex = state.indexWhere((store) => store.id == id);
+//   };
 
-    if (storeToReplaceIndex != -1) {
-      newState[storeToReplaceIndex] =
-          state[storeToReplaceIndex].copyWith(name: name);
-    }
-    state = newState;
-  }
-}
+//   Future<Void> getStores(IsarService isar) async {
+//     initialStores = await isar
+//         .getAllStores()
+//         .then((value) => value.map((e) => e.toDomain()).toList());
+//     throw 'Done';
+//   }
+
+//   /// Adds `Store` item to list.
+//   void add(String name) {
+//     state = [
+//       ...state,
+//       Store(
+//         id: Isar.autoIncrement,
+//         name: name,
+//         transactionList: const [],
+//       ),
+//     ];
+//   }
+
+//   /// Edits a `Store` item.
+//   void edit({required String id, required String name}) {
+//     final newState = [...state];
+//     final storeToReplaceIndex = state.indexWhere((store) => store.id == id);
+
+//     if (storeToReplaceIndex != -1) {
+//       newState[storeToReplaceIndex] =
+//           state[storeToReplaceIndex].copyWith(name: name);
+//     }
+//     state = newState;
+//   }
+// }

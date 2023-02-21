@@ -13,7 +13,7 @@ class BalanceCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double balance = ref.watch(totalAmount);
+    final balance = ref.watch(totalAmountProvider.stream);
     return Container(
       margin: EdgeInsets.all(15.0),
       width: double.infinity,
@@ -32,9 +32,15 @@ class BalanceCard extends ConsumerWidget {
               textBaseline: TextBaseline.alphabetic,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
-                Text(
-                  balance.toInt().toString(),
-                  style: kCardTextStyle,
+                StreamBuilder(
+                  stream: balance,
+                  initialData: 0,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return Text(
+                      snapshot.data.toInt().toString(),
+                      style: kCardTextStyle,
+                    );
+                  },
                 ),
                 SizedBox(
                   width: 5,

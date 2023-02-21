@@ -1,17 +1,23 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:combien/src/database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:isar/isar.dart';
 import '../components/homepage_widgets.dart';
+import '../models/dtos/store.dart';
 import '../models/transactions.dart';
+import '../providers/stores_provider.dart';
 import '../utils/constants.dart';
 
-class StorePage extends StatelessWidget {
+class StorePage extends ConsumerWidget {
   const StorePage({super.key, required this.store});
   final Store store;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final db = ref.read(isarProvider);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -21,7 +27,9 @@ class StorePage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: RawMaterialButton(
                 elevation: 0,
-                onPressed: () {},
+                onPressed: () => {
+                  db.addTransaction(storeId: store.id, amount: 100.5),
+                },
                 shape: CircleBorder(),
                 constraints: BoxConstraints.tightFor(width: 40, height: 40),
                 fillColor: kDarkColor,
@@ -56,10 +64,24 @@ class StorePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      Text(
-                        store.balance.toString(),
-                        style: kCardTextStyle.copyWith(
-                            color: kDarkColor, fontWeight: FontWeight.w600),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final balance =
+                              ref.watch(storeBalanceProvider(store.id).stream);
+                          return StreamBuilder(
+                            stream: balance,
+                            initialData: store.balance,
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              return Text(
+                                snapshot.data.toString(),
+                                style: kCardTextStyle.copyWith(
+                                    color: kDarkColor,
+                                    fontWeight: FontWeight.w600),
+                              );
+                            },
+                          );
+                        },
                       ),
                       Text(
                         'DH',
