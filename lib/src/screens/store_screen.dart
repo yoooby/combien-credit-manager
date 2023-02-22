@@ -1,13 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:combien/src/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:isar/isar.dart';
-import '../components/homepage_widgets.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../models/dtos/store.dart';
-import '../models/transactions.dart';
 import '../providers/stores_provider.dart';
 import '../utils/constants.dart';
 
@@ -27,9 +26,7 @@ class StorePage extends ConsumerWidget {
               padding: const EdgeInsets.all(10.0),
               child: RawMaterialButton(
                 elevation: 0,
-                onPressed: () => {
-                  db.addTransaction(storeId: store.id, amount: 100.5),
-                },
+                onPressed: () => onAddAlertPressed(context, db, store),
                 shape: CircleBorder(),
                 constraints: BoxConstraints.tightFor(width: 40, height: 40),
                 fillColor: kDarkColor,
@@ -92,7 +89,7 @@ class StorePage extends ConsumerWidget {
                 ],
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => {},
                 style: ButtonStyle(
                   // TODO: edit splash color
                   foregroundColor: MaterialStatePropertyAll(Colors.white),
@@ -116,4 +113,59 @@ class StorePage extends ConsumerWidget {
       ),
     );
   }
+}
+
+onAddAlertPressed(context, IsarService db, Store store) {
+  final amountController = TextEditingController();
+  final descController = TextEditingController();
+  Alert(
+      context: context,
+      title: "Add transaction",
+      content: Form(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: TextFormField(
+                controller: descController,
+                decoration: InputDecoration(
+                  labelText: 'Description (optional)',
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              flex: 1,
+              child: TextField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp("[0-9.]"))
+                ],
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'amount',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      buttons: [
+        DialogButton(
+          color: kDarkColor,
+          onPressed: () {
+            db.addTransaction(
+                storeId: store.id,
+                amount: double.parse(amountController.text),
+                desc: descController.text);
+            Navigator.pop(context);
+          },
+          child: Text(
+            "Add",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
 }
