@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:combien/src/components/store_transactions_list.dart';
 import 'package:combien/src/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -103,10 +104,7 @@ class StorePage extends ConsumerWidget {
               SizedBox(
                 height: 20,
               ),
-              // TODO: implement list of transactions
-              // ListView(
-              //   // t
-              // ),
+              Expanded(child: TransactionsList(store)),
             ],
           ),
         ),
@@ -156,11 +154,13 @@ onAddAlertPressed(context, IsarService db, Store store) {
         DialogButton(
           color: kDarkColor,
           onPressed: () {
-            db.addTransaction(
-                storeId: store.id,
-                amount: double.parse(amountController.text),
-                desc: descController.text);
-            Navigator.pop(context);
+            if (amountController.text.isNotEmpty) {
+              db.addTransaction(
+                  storeId: store.id,
+                  amount: double.tryParse(amountController.text) ?? 0,
+                  desc: descController.text);
+              Navigator.pop(context);
+            }
           },
           child: Text(
             "Add",

@@ -112,7 +112,7 @@ P _storeDeserializeProp<P>(
             allOffsets,
             Transaction(),
           ) ??
-          List.empty(growable: true)) as P;
+          []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -123,12 +123,10 @@ Id _storeGetId(Store object) {
 }
 
 List<IsarLinkBase<dynamic>> _storeGetLinks(Store object) {
-  return List.empty(growable: true);
+  return [];
 }
 
-void _storeAttach(IsarCollection<dynamic> col, Id id, Store object) {
-  object.id = id;
-}
+void _storeAttach(IsarCollection<dynamic> col, Id id, Store object) {}
 
 extension StoreQueryWhereSort on QueryBuilder<Store, Store, QWhere> {
   QueryBuilder<Store, Store, QAfterWhere> anyId() {

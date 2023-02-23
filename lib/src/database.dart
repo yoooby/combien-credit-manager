@@ -28,8 +28,12 @@ class IsarService {
     return Future.value(Isar.getInstance());
   }
 
-  Future<void> createStore(Store newStore) async {
+  Future<void> createStore(String storeName) async {
     final isar = await db;
+    final newStore = Store(
+        id: Isar.autoIncrement,
+        name: storeName,
+        transactionList: List.empty(growable: true));
     isar.writeTxnSync<int>(() => isar.stores.putSync(newStore));
   }
 

@@ -7,7 +7,7 @@ part 'store.g.dart';
 
 @collection
 class Store {
-  late Id id = Isar.autoIncrement;
+  final Id id;
   late String name;
   late List<Transaction> transactionList = List.empty(growable: true);
   @ignore

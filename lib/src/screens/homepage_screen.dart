@@ -1,15 +1,19 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:combien/src/database.dart';
 import 'package:combien/src/models/dtos/store.dart';
 import 'package:combien/src/models/transactions.dart';
 import 'package:combien/src/providers/stores_provider.dart';
 import 'package:combien/src/screens/store_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../components/store_card.dart';
 import '../components/homepage_widgets.dart';
+import '../utils/constants.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -17,7 +21,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final stores = ref.read(storesListProvider.stream);
-
+    final db = ref.read(isarProvider);
     return SafeArea(
       child: Column(
         children: <Widget>[
@@ -36,6 +40,7 @@ class HomePage extends ConsumerWidget {
               ),
               HomePageButton(
                 label: 'Add',
+                onPressed: () => onAddAlertPressed(context, db),
                 icon: FontAwesomeIcons.plus,
               ),
             ],
@@ -74,4 +79,39 @@ class HomePage extends ConsumerWidget {
       ),
     );
   }
+}
+
+onAddAlertPressed(context, IsarService db) {
+  final nameController = TextEditingController();
+  Alert(
+      context: context,
+      title: "Add Store",
+      content: Form(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Description (optional)',
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      buttons: [
+        DialogButton(
+          color: kDarkColor,
+          onPressed: () {
+            db.createStore(nameController.text);
+            Navigator.pop(context);
+          },
+          child: Text(
+            "Add",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
 }

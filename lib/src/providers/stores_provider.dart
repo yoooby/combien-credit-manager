@@ -8,6 +8,14 @@ import 'package:isar/isar.dart';
 
 import '../database.dart';
 
+
+final transactionsListProvider = StreamProvider.family<List<Transaction>, Store>((ref, store) async* {
+    final storeList = await ref.watch(storesListProvider.future);
+    final store = storeList.where((store) => store.id == store.id).first;
+    yield store.transactionList;
+});
+
+
 final storeBalanceProvider =
     StreamProvider.family<double, Id>((ref, storeId) async* {
   final storeList = await ref.watch(storesListProvider.future);

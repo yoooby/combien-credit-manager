@@ -13,10 +13,13 @@ dependencies:
   flutter_hooks: ^0.18.5+1
   font_awesome_flutter: ^10.4.0
   freezed: ^2.3.2
+  grouped_list: ^5.1.2
   hooks_riverpod: ^2.2.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
+  jiffy: ^5.0.0
   rflutter_alert: ^2.0.4
+  sticky_grouped_list: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
