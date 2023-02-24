@@ -17,8 +17,12 @@ class IsarService {
   }
 
   Future<Isar> openIsar() async {
-    final String defaultLocale = Platform.localeName;
-    await Jiffy.locale(defaultLocale);
+    final String defaultLocale = Platform.localeName.split("_").first;
+    try {
+      await Jiffy.locale(defaultLocale);
+    } catch (e) {
+      await Jiffy.locale('en');
+    }
     if (Isar.instanceNames.isEmpty) {
       return await Isar.open(
         [StoreSchema],
