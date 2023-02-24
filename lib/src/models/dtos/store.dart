@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-
-import '../transactions.dart';
 
 part 'store.g.dart';
 

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:combien/src/components/store_transactions_list.dart';
 import 'package:combien/src/database.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +8,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../models/dtos/store.dart';
 import '../providers/stores_provider.dart';
 import '../utils/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StorePage extends ConsumerWidget {
   const StorePage({super.key, required this.store});
@@ -27,11 +26,12 @@ class StorePage extends ConsumerWidget {
               padding: const EdgeInsets.all(10.0),
               child: RawMaterialButton(
                 elevation: 0,
-                onPressed: () => onAddAlertPressed(context, db, store),
-                shape: CircleBorder(),
-                constraints: BoxConstraints.tightFor(width: 40, height: 40),
+                onPressed: () => onAlertPressed(context, db, store),
+                shape: const CircleBorder(),
+                constraints:
+                    const BoxConstraints.tightFor(width: 40, height: 40),
                 fillColor: kDarkColor,
-                child: Icon(
+                child: const Icon(
                   FontAwesomeIcons.plus,
                   color: Colors.white,
                 ),
@@ -53,8 +53,8 @@ class StorePage extends ConsumerWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Spent this week'),
-                  SizedBox(
+                  Text(AppLocalizations.of(context).spentThisWeek),
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -82,7 +82,7 @@ class StorePage extends ConsumerWidget {
                         },
                       ),
                       Text(
-                        'DH',
+                        AppLocalizations.of(context).dh,
                         style: kCurrencyTextStyle.copyWith(color: kDarkColor),
                       )
                     ],
@@ -90,18 +90,19 @@ class StorePage extends ConsumerWidget {
                 ],
               ),
               TextButton(
-                onPressed: () => {},
+                onPressed: () =>
+                    onAlertPressed(context, db, store, isPayment: true),
                 style: ButtonStyle(
                   // TODO: edit splash color
-                  foregroundColor: MaterialStatePropertyAll(Colors.white),
+                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
                   backgroundColor: MaterialStateProperty.all<Color>(kDarkColor),
                 ),
-                child: const Text(
-                  'Pay',
-                  style: TextStyle(fontWeight: FontWeight.w900),
+                child: Text(
+                  AppLocalizations.of(context).pay,
+                  style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Expanded(child: TransactionsList(store)),
@@ -113,25 +114,29 @@ class StorePage extends ConsumerWidget {
   }
 }
 
-onAddAlertPressed(context, IsarService db, Store store) {
+onAlertPressed(context, IsarService db, Store store, {bool isPayment = false}) {
   final amountController = TextEditingController();
   final descController = TextEditingController();
   Alert(
       context: context,
-      title: "Add transaction",
+      title: isPayment
+          ? AppLocalizations.of(context).pay
+          : AppLocalizations.of(context).addTransaction,
       content: Form(
         child: Row(
           children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: TextFormField(
-                controller: descController,
-                decoration: InputDecoration(
-                  labelText: 'Description (optional)',
+            if (!isPayment) ...[
+              Expanded(
+                flex: 2,
+                child: TextFormField(
+                  controller: descController,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).description,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
+            ],
+            const SizedBox(
               width: 10,
             ),
             Expanded(
@@ -142,7 +147,7 @@ onAddAlertPressed(context, IsarService db, Store store) {
                 ],
                 controller: amountController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'amount',
                 ),
               ),
@@ -157,14 +162,16 @@ onAddAlertPressed(context, IsarService db, Store store) {
             if (amountController.text.isNotEmpty) {
               db.addTransaction(
                   storeId: store.id,
-                  amount: double.tryParse(amountController.text) ?? 0,
+                  amount: isPayment
+                      ? -double.tryParse(amountController.text)!
+                      : double.tryParse(amountController.text) ?? 0,
                   desc: descController.text);
               Navigator.pop(context);
             }
           },
           child: Text(
-            "Add",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            AppLocalizations.of(context).add,
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
         )
       ]).show();

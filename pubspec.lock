@@ -161,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  cryptography:
-    dependency: transitive
-    description:
-      name: cryptography
-      sha256: e0e37f79665cd5c86e8897f9abe1accfe813c0cc5299dab22256e22fddc1fef8
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   dart_style:
     dependency: transitive
     description:
@@ -217,14 +209,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  flat_buffers:
-    dependency: transitive
-    description:
-      name: flat_buffers
-      sha256: "23e2ced0d8e8ecdffbd9f267f49a668c74438393b9acaeac1c724123e3764263"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -246,6 +230,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -323,14 +312,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  http:
-    dependency: transitive
-    description:
-      name: http
-      sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.13.5"
   http_multi_server:
     dependency: transitive
     description:
@@ -348,7 +329,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
@@ -459,22 +440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  objectbox:
-    dependency: transitive
-    description:
-      name: objectbox
-      sha256: c18d41f4e81e5a30fc0e2200e9e8306f5ccc8a9b61fe3746426359690c33dc7b
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.7.2"
-  objectbox_generator:
-    dependency: "direct dev"
-    description:
-      name: objectbox_generator
-      sha256: "728a9ccf4d6a2ac44a016f6cb9798e4a31ee92b79828526181e0de97a3506c28"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.7.2"
   package_config:
     dependency: transitive
     description:
@@ -531,14 +496,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  scrollable_positioned_list:
-    dependency: transitive
-    description:
-      name: scrollable_positioned_list
-      sha256: ca7fcaa743db712d4f7b1580526f494d0093c77a721a65705ee51fbeac7a2bd3
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.5"
   shelf:
     dependency: transitive
     description:
@@ -592,14 +549,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2+1"
-  sticky_grouped_list:
-    dependency: "direct main"
-    description:
-      name: sticky_grouped_list
-      sha256: "40398cb90321f07cbdbdd3049c27a5f048bd75a13abb19453b07a956f53a0eda"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   stream_channel:
     dependency: transitive
     description:

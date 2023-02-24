@@ -1,5 +1,5 @@
 name: combien
-description: A new Flutter project.
+description: A credit manager.
 publish_to: "none"
 version: 0.1.0
 
@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   font_awesome_flutter: ^10.4.0
   freezed: ^2.3.2
   grouped_list: ^5.1.2
@@ -19,16 +22,14 @@ dependencies:
   isar_flutter_libs: ^3.0.5
   jiffy: ^5.0.0
   rflutter_alert: ^2.0.4
-  sticky_grouped_list: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   freezed_annotation: ^2.2.0
-
   isar_generator: ^3.0.5
-  objectbox_generator: ^1.7.2
 
 flutter:
   uses-material-design: true
+  generate: true

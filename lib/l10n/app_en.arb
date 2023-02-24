@@ -1,0 +1,23 @@
+{
+  "@youPaid": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "Add",
+  "addStore": "Add store",
+  "addTransaction": "Add transaction",
+  "delete": "Delete",
+  "description": "Desciption",
+  "dh": "DH",
+  "edit": "Edit",
+  "finance": "Finance",
+  "name": "Name",
+  "pay": "Pay",
+  "settings": "Settings",
+  "spentThisWeek": "Spent this week",
+  "statistics": "Statistics",
+  "youPaid": "You Paid {amount}"
+}

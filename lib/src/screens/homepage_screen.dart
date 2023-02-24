@@ -1,15 +1,13 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:combien/src/database.dart';
 import 'package:combien/src/models/dtos/store.dart';
-import 'package:combien/src/models/transactions.dart';
 import 'package:combien/src/providers/stores_provider.dart';
 import 'package:combien/src/screens/store_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../components/store_card.dart';
 import '../components/homepage_widgets.dart';
@@ -26,26 +24,26 @@ class HomePage extends ConsumerWidget {
       child: Column(
         children: <Widget>[
           // home app bar
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: MyAppBar(),
-          ),
-          BalanceCard(),
+          // Padding(
+          //   padding: const EdgeInsets.all(15.0),
+          //   child: MyAppBar(),
+          // ),
+          const BalanceCard(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               HomePageButton(
-                label: 'Statistics',
+                label: AppLocalizations.of(context).statistics,
                 icon: FontAwesomeIcons.chartPie,
               ),
               HomePageButton(
-                label: 'Add',
+                label: AppLocalizations.of(context).add,
                 onPressed: () => onAddAlertPressed(context, db),
                 icon: FontAwesomeIcons.plus,
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           StreamBuilder<List<Store>>(
@@ -53,12 +51,14 @@ class HomePage extends ConsumerWidget {
             initialData: List.empty(growable: true),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
-                return CircularProgressIndicator.adaptive();
+                return const CircularProgressIndicator.adaptive();
               } else {
                 return Column(
                   children: [
                     for (var store in snapshot.data)
                       StoreCard(
+                        parentContext: context,
+                        db: db,
                         onPress: () {
                           Navigator.push(
                             context,
@@ -67,7 +67,7 @@ class HomePage extends ConsumerWidget {
                             ),
                           );
                         },
-                        name: store.name,
+                        store: store,
                         amount: store.balance.toString(),
                       ),
                   ],
@@ -85,7 +85,7 @@ onAddAlertPressed(context, IsarService db) {
   final nameController = TextEditingController();
   Alert(
       context: context,
-      title: "Add Store",
+      title: AppLocalizations.of(context).addStore,
       content: Form(
         child: Row(
           children: <Widget>[
@@ -94,7 +94,7 @@ onAddAlertPressed(context, IsarService db) {
               child: TextFormField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  labelText: 'Description (optional)',
+                  labelText: AppLocalizations.of(context).name,
                 ),
               ),
             ),
@@ -109,8 +109,8 @@ onAddAlertPressed(context, IsarService db) {
             Navigator.pop(context);
           },
           child: Text(
-            "Add",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            AppLocalizations.of(context).add,
+            style: const TextStyle(color: Colors.white, fontSize: 20),
           ),
         )
       ]).show();

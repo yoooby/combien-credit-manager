@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:collection/collection.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:combien/src/models/dtos/store.dart';
@@ -8,13 +5,12 @@ import 'package:isar/isar.dart';
 
 import '../database.dart';
 
-
-final transactionsListProvider = StreamProvider.family<List<Transaction>, Store>((ref, store) async* {
-    final storeList = await ref.watch(storesListProvider.future);
-    final store = storeList.where((store) => store.id == store.id).first;
-    yield store.transactionList;
+final transactionsListProvider =
+    StreamProvider.family<List<Transaction>, Store>((ref, store) async* {
+  final storeList = await ref.watch(storesListProvider.future);
+  final newStore = storeList.where((element) => store.id == element.id).first;
+  yield newStore.transactionList;
 });
-
 
 final storeBalanceProvider =
     StreamProvider.family<double, Id>((ref, storeId) async* {

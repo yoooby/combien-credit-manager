@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.yoooby" "\0"
-            VALUE "FileDescription", "combien" "\0"
+            VALUE "FileDescription", "Combien Credit Tracker" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "combien" "\0"
+            VALUE "InternalName", "Combien Credit Tracker" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.yoooby. All rights reserved." "\0"
             VALUE "OriginalFilename", "combien.exe" "\0"
-            VALUE "ProductName", "combien" "\0"
+            VALUE "ProductName", "Combien Credit Tracker" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

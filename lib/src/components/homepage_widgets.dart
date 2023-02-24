@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:combien/src/providers/stores_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/constants.dart';
 
@@ -15,14 +15,14 @@ class BalanceCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final balance = ref.watch(totalAmountProvider.stream);
     return Container(
-      margin: EdgeInsets.all(15.0),
+      margin: const EdgeInsets.all(15.0),
       width: double.infinity,
       height: 230,
       child: Card(
         elevation: 8,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
-        color: Color(0xFF0396FA),
+        color: const Color(0xFF0396FA),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -42,11 +42,11 @@ class BalanceCard extends ConsumerWidget {
                     );
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
-                  'DH',
+                  AppLocalizations.of(context).dh,
                   style: kCurrencyTextStyle,
                 )
               ],
@@ -68,9 +68,9 @@ class MyAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text('Finance', style: kAppBarTextStyle),
+        Text(AppLocalizations.of(context).finance, style: kAppBarTextStyle),
         Text(
-          'Settings',
+          AppLocalizations.of(context).settings,
           style: kAppBarTextStyle,
         ),
       ],
@@ -96,18 +96,18 @@ class HomePageButton extends StatelessWidget {
         RawMaterialButton(
           elevation: 2,
           onPressed: onPressed,
-          shape: CircleBorder(),
-          constraints: BoxConstraints.tightFor(width: 56, height: 56),
+          shape: const CircleBorder(),
+          constraints: const BoxConstraints.tightFor(width: 56, height: 56),
           fillColor: kDarkColor,
           child: Icon(
             icon,
             color: Colors.white,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 17,
             color: kDarkColor,

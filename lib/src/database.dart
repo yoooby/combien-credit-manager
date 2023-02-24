@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:combien/src/models/dtos/store.dart';
-import 'package:combien/src/models/transactions.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:path/path.dart';
+import 'package:jiffy/jiffy.dart';
 
 final isarProvider = Provider<IsarService>((ref) {
   return IsarService();
@@ -18,6 +17,8 @@ class IsarService {
   }
 
   Future<Isar> openIsar() async {
+    final String defaultLocale = Platform.localeName;
+    await Jiffy.locale(defaultLocale);
     if (Isar.instanceNames.isEmpty) {
       return await Isar.open(
         [StoreSchema],
@@ -37,6 +38,22 @@ class IsarService {
     isar.writeTxnSync<int>(() => isar.stores.putSync(newStore));
   }
 
+  Future<void> deleteStore(Id storeId) async {
+    final isar = await db;
+    await isar.writeTxn(() async {
+      await isar.stores.delete(storeId);
+    });
+  }
+
+  Future<void> editStore(Id storeId, storeName) async {
+    final isar = await db;
+    Store? store = await isar.stores.get(storeId);
+    store!.name = storeName;
+    await isar.writeTxn(() async {
+      await isar.stores.put(store);
+    });
+  }
+
   Future<void> addTransaction(
       {required Id storeId, required double amount, String desc = ''}) async {
     final isar = await db;
@@ -49,9 +66,6 @@ class IsarService {
     store.transactionList.addAll(tsList);
     store.transactionList.add(transaction);
     await isar.writeTxn(() async {
-      for (var i in store.transactionList) {
-        print(i.date);
-      }
       await isar.stores.put(store);
     });
   }

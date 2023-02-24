@@ -1,0 +1,23 @@
+{
+  "@youPaid": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "add": "إضافة",
+  "addStore": "إضافة متجر",
+  "addTransaction": "إضافة صفقة",
+  "delete": "حذف",
+  "description": "الوصف",
+  "dh": "درهم",
+  "edit": "تعديل",
+  "finance": "المالية",
+  "name": "الاسم",
+  "pay": "دفع",
+  "settings": "الإعدادات",
+  "spentThisWeek": "المبلغ المنفق هذا الأسبوع",
+  "statistics": "الإحصائيات",
+  "youPaid": "{amount} لقد دفعت"
+}
