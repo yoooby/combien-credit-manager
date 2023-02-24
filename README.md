@@ -1,6 +1,6 @@
 # Credit Manager App
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/gpl-3-0)
+[![License](https://img.shields.io/badge/License-GPL-blue.svg)](https://opensource.org/licenses/MIT)
 
 The Credit Manager app is designed to help you keep track of who you owe money to and how much. It uses Moroccan Dirham as its currency, so you can easily manage your debts easily.
 
@@ -12,9 +12,9 @@ The Credit Manager app is designed to help you keep track of who you owe money t
      <td>Add a record</td>
   </tr>
   <tr>
-    <td><img src="screenshots/1.png" height=480></td>
-    <td><img src="screenshots/2.png" height=480></td>
-    <td><img src="screenshots/4.png" height=480></td>
+    <td><img src="screenshots/1.png" width=270 height=480></td>
+    <td><img src="screenshots/2.png" width=270 height=480></td>
+    <td><img src="screenshots/4.png" width=270 height=480></td>
   </tr>
  </table>
 ## Features
